@@ -21,6 +21,7 @@ for package in "${packages[@]}"
   done
 
 # Request database backup and save to filepath
+echo "Requesting backup of $DATABASE to $FILEPATH"
 curl -X POST \
   -F "master_pwd=$PASSWORD" \
   -F "name=$DATABASE" \
@@ -33,6 +34,7 @@ FILETYPE="$(file --mime-type -b "$FILEPATH")"
 if [[ "$FILETYPE" == 'text/html' ]]; then
   grep error "$FILEPATH"
 fi
+echo "Validating $FILEPATH"
 unzip -q -t "$FILEPATH"
 
 # Announce backup completed

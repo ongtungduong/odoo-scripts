@@ -20,9 +20,11 @@ for package in "${packages[@]}"
   done
 
 # Validate zip file
+echo "Validating $FILE"
 unzip -q -t $FILE
 
 # Replace existing database if REPLACE='true'
+echo "Drop database $DATABASE"
 if $REPLACE; then
   curl \
     --silent \
@@ -32,6 +34,7 @@ if $REPLACE; then
 fi
 
 # Request database restore
+echo "Restore database $DATABASE"
 CURL=$(curl \
   -F "master_pwd=$PASSWORD" \
   -F "name=$DATABASE" \
